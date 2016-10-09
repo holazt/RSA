@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>JavaScript RSA Encryption </title>
+  </head>
+ 
+<script language="JavaScript" type="text/javascript" src="./js/jsbn.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/prng4.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/rng.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/rsa.js"></script>
+<script language="JavaScript" type="text/javascript" src="./js/base64.js"></script>
+<script language="JavaScript"> 
+//publc key  and public length hex data
+var public_key="b3a55f5100b87959ef1bd60508fca4f547af9a0617e8eea1a69a9f7f3f669ee01d89033a7521fa25c6437c6e4c4e0237afc23dbc3f1597b3a0a2181b45aae5effbb787cf6ced26fc042168bad462d916323246ce923c6fa22b6baf62f2a8f93a753b21b3fcd4c5789d89ca02badb88081452a5ecc12d88374475bfa409627e9014600d1b821b76b8b44e6d43bf28eb9fbb68a7b40e5c778d8ff63798764277c040432b9b27a682c8e1c202e95e8c3b826d5188c389716bb4a7278761a7b22ff39ede130c1b9022449f190a79846ea616fec3e1056e8f24a7b3b508ca734ea2c8a92f2c97adc4afd391a52e04504fd69553b4e048650a44ebdaa889701256d315";
+var public_length="0010001";
+function do_encrypt() {
+  var before = new Date();
+  var rsa = new RSAKey();
+  rsa.setPublic(public_key, public_length);
+  var res = rsa.encrypt(document.rsatest.plaintext.value);
+  var after = new Date();
+  if(res) {
+    document.rsatest.ciphertext.value =res;
+    document.rsatest.cipherb64.value = hex2b64(res);
+    document.rsatest.status.value = "Time: " + (after - before) + "ms";
+  }
+}
+
+//-->
+</script>
+ 
+<form name="rsatest" action="rsa.php" method="post">
+Plaintext (string):<br>
+<input name="plaintext" type="text" value="test" size=40>
+<input type="button" value="encrypt" onClick="do_encrypt();"><p>
+Ciphertext (hex):(Not used)<br>
+<textarea name="ciphertext" rows=4 cols=70></textarea><p>
+Ciphertext (base64):<br>
+<textarea name="cipherb64" rows=3 cols=70></textarea><p>
+Status:<br>
+<input name="status" type="text" size=40><p>
+<input type="submit" value="submit" />
+</form>
+  </body>
+</html>
+
